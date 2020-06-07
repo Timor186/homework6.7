@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.neusoft.mapper.OfficeMapper">
+    <resultMap id="officeMap" type="com.neusoft.po.Office"> 
+    	<id property="id" column="oid"></id>
+    	<result property="office" column="office"></result> 
+    	<result property="officeinfo" column="officeinfo"></result> 
+    	<collection property="users" ofType="com.neusoft.po.Doctor"> 
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result> 
+            <result column="sex" property="sex"></result> 
+    	</collection>
+    </resultMap>
+    <select id="getAllOffice" resultMap="officeMap">
+        select d.*,do.did did,do.oid oid,office,officeinfo
+		from doctoroffice do 
+		inner join doctor d on d.id=do.did
+		inner join office o on do.oid=o.id;
+    </select>
+</mapper> 
